@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MainGame;
 
 import java.awt.Graphics2D;
@@ -23,7 +18,7 @@ public class Ball {
     private BufferedImage ballImg;
     private final int BALL_SIZE = 50;
     private int ballPositionX = 100;
-    private int ballPositiony = 100;
+    private int ballPositionY = 100;
     private double ballVerticalSpeed = 40;
     private double ballHorizontalSpeed = 5;
 
@@ -43,9 +38,8 @@ public class Ball {
 
     public void drawBall(Graphics2D g2D) {
 
-        g2D.drawImage(
-                ballImg, ballPositionX, ballPositiony,
-                ballPositionX + BALL_SIZE, ballPositiony + BALL_SIZE,
+        g2D.drawImage(ballImg, ballPositionX, ballPositionY,
+                ballPositionX + BALL_SIZE, ballPositionY + BALL_SIZE,
                 0, 0, ballImg.getWidth(), ballImg.getHeight(),
                 null);
 
@@ -57,22 +51,22 @@ public class Ball {
     /// HANDLING BALL ON VERTICAL DIRECTION (Y)
     private void applyGravity() {
         ballVerticalSpeed += gravity;
-        ballPositiony += ballVerticalSpeed;
+        ballPositionY += ballVerticalSpeed;
         ballVerticalSpeed -= (ballVerticalSpeed * arResistance);
     }
 
     public void makeBounceBottom(int surface) {
-        ballPositiony = surface - (BALL_SIZE / 2);
+        ballPositionY = surface - Constants.getHalves(BALL_SIZE);
         ballVerticalSpeed *= -1;
         ballVerticalSpeed -= (ballVerticalSpeed * ballPressure);
     }
 
     public void makeBounceTop(int surface) {
-        ballPositiony = surface + (BALL_SIZE / 2);
+        ballPositionY = surface + Constants.getHalves(BALL_SIZE);
         ballVerticalSpeed *= -1;
         ballVerticalSpeed -= (ballVerticalSpeed * ballPressure);
     }
-    
+
     /// HANDLING BALL ON HORIZONTAL DIRECTION (X)
     private void applyHorizontalSpeed() {
         ballPositionX += ballHorizontalSpeed;
@@ -80,30 +74,30 @@ public class Ball {
     }
 
     private void makeBounceLeft(int surface) {
-        ballPositionX = surface + (BALL_SIZE / 2);
+        ballPositionX = surface + Constants.getHalves(BALL_SIZE);
         ballHorizontalSpeed *= -1;
         ballHorizontalSpeed -= (ballHorizontalSpeed * ballPressure);
     }
 
     private void makeBounceRight(int surface) {
-        ballPositionX = surface - (BALL_SIZE / 2);
+        ballPositionX = surface - Constants.getHalves(BALL_SIZE);
         ballHorizontalSpeed *= -1;
         ballHorizontalSpeed -= (ballHorizontalSpeed * ballPressure);
     }
 
     // keep ball in the screen
     private void keepOnScreenBounds() {
-        if (ballPositiony + (BALL_SIZE / 2) > 845) {
-            makeBounceBottom(845);
-        }
-        if (ballPositiony - (BALL_SIZE / 2) < 0) {
+        if (ballPositionY - Constants.getHalves(BALL_SIZE) < 0) {
             makeBounceTop(0);
         }
-        if (ballPositionX - (BALL_SIZE / 2) < 0) {
+        if (ballPositionY + Constants.getHalves(BALL_SIZE) >= Constants.WINDOW_HEIGHT) {
+            makeBounceBottom(Constants.WINDOW_HEIGHT);
+        }
+        if (ballPositionX - Constants.getHalves(BALL_SIZE) < 0) {
             makeBounceLeft(0);
         }
-        if (ballPositionX + (BALL_SIZE / 2) > 1366) {
-            makeBounceRight(1366);
+        if (ballPositionX + Constants.getHalves(BALL_SIZE) >= Constants.WINDOW_WIDTH) {
+            makeBounceRight(Constants.WINDOW_WIDTH);
         }
     }
 
@@ -115,12 +109,12 @@ public class Ball {
         this.ballPositionX = ballPositionX;
     }
 
-    public int getBallPositiony() {
-        return ballPositiony;
+    public int getBallPositionY() {
+        return ballPositionY;
     }
 
-    public void setBallPositiony(int ballPositiony) {
-        this.ballPositiony = ballPositiony;
+    public void setBallPositionY(int ballPositionY) {
+        this.ballPositionY = ballPositionY;
     }
 
     public double getBallVerticalSpeed() {

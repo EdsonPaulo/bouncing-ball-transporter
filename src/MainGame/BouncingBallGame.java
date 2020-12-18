@@ -77,14 +77,14 @@ public class BouncingBallGame extends JPanel implements Runnable, KeyListener, M
         ball.drawBall(g2D);
         block.drawBlock(g2D, 200, 30);
 
-        
         //Invert block direction
-        if (block.getBlockPositionX() >= (1366 - block.getBlockWidth()) || block.getBlockPositionX() <= 0) {
+        if (block.getBlockPositionX() >= (Constants.WINDOW_WIDTH - block.getBlockWidth())
+                || block.getBlockPositionX() <= 0) {
             blockPositionFactor *= -1;
         }
-        
+
         block.setBlockPositionX(block.getBlockPositionX() + blockPositionFactor);
-    
+
         g2D.setColor(Color.white);
         g2D.setFont(new Font("consolas", Font.BOLD, 32));
         g2D.drawString("SCORE: " + userScore, 1100, 40);
@@ -92,19 +92,21 @@ public class BouncingBallGame extends JPanel implements Runnable, KeyListener, M
 
     public void listenerRacketBounce() throws InterruptedException {
         int overhead = mouseY - oldMouseY;
-        if ((ball.getBallPositionX() + (ball.getBALL_SIZE() / 2)
-                > mouseX - (racket.getRACKET_WIDTH() / 2))
-                && (ball.getBallPositionX() - (ball.getBALL_SIZE() / 2)
-                < mouseX + (racket.getRACKET_WIDTH() / 2))) {
+        if ((ball.getBallPositionX() + Constants.getHalves(ball.getBALL_SIZE()) > mouseX - Constants.getHalves(racket.getRACKET_WIDTH()))
+                && (ball.getBallPositionX() - Constants.getHalves(ball.getBALL_SIZE()) < mouseX + Constants.getHalves(racket.getRACKET_WIDTH()))) {
 
-            if (Point2D.distance(ball.getBallPositionX(), ball.getBallPositiony(), ball.getBallPositionX(), mouseY)
-                    <= ((ball.getBALL_SIZE() / 2) + Math.abs(overhead))) {
+            if (Point2D.distance(
+                    ball.getBallPositionX(), ball.getBallPositionY(),
+                    ball.getBallPositionX(), mouseY)
+                    <= (Constants.getHalves(ball.getBALL_SIZE()) + Math.abs(overhead))) {
+
                 ball.makeBounceBottom(mouseY);
-                ball.setBallHorizontalSpeed((ball.getBallPositionX() - mouseX) / 20);
-
+                ball.setBallHorizontalSpeed(
+                        Constants.getHalves((ball.getBallPositionX() - mouseX), 20)
+                );
                 if (overhead < 0) {
-                    ball.setBallPositiony(ball.getBallPositiony() + ((int) Math.abs(overhead / 2)));
-                    ball.setBallVerticalSpeed(ball.getBallVerticalSpeed() + (overhead / 2));
+                    ball.setBallPositionY(ball.getBallPositionY() + ((int) Math.abs(Constants.getHalves(overhead))));
+                    ball.setBallVerticalSpeed(ball.getBallVerticalSpeed() + Constants.getHalves(overhead));
                 }
             }
         }
@@ -148,8 +150,6 @@ public class BouncingBallGame extends JPanel implements Runnable, KeyListener, M
             oldMouseX = mouseX;
 
             racket.setRacketPositionX(e.getX());
-            
-           //  if(racket.getRacketPositionY() < 840/2)
             racket.setRacketPositionY(e.getY());
             mouseX = e.getX();
             mouseY = e.getY();

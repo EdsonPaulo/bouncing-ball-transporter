@@ -18,8 +18,8 @@ public class Block {
     private int blockWidth = 250;
     private int blockHeight = 100;
 
-    private int blockPositionX = 1336 / 2;
-    private int blockPositionY = 800 / 2;
+    private int blockPositionX = Constants.WINDOW_WIDTH_HALF;
+    private int blockPositionY = Constants.WINDOW_HEIGHT_HALF;
     private int blockVelocity = 10;
 
     public Block() {
