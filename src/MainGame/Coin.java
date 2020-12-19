@@ -42,10 +42,6 @@ public class Coin {
         }
     }
 
-    public void updateBlock() {
-
-    }
-
     public void drawCoin(Graphics2D g2D) {
         g2D.drawImage(coinImg, positionX, positionY,
                 positionX + COIN_WIDTH, positionY + COIN_HEIGHT,
@@ -85,6 +81,5 @@ public class Coin {
     public void setCOIN_HEIGHT(int COIN_HEIGHT) {
         this.COIN_HEIGHT = COIN_HEIGHT;
     }
-
 
 }

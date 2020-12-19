@@ -18,7 +18,7 @@ public class Life {
     private int LIFE_WIDTH = 30;
     private int LIFE_HEIGHT = 30;
 
-    private int life = 4;
+    private int life = 3;
 
     public Life() {
         try {
