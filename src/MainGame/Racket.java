@@ -17,12 +17,12 @@ public class Racket {
 
     // RACKET PROPERTIES
     private BufferedImage racketImg;
-    private final int RACKET_WIDTH = 220;
-    private final int RACKET_HEIGHT = 70;
+    private final int RACKET_WIDTH = 250;
+    private final int RACKET_HEIGHT = 40;
 
-    private int racketPositionX = 100;
-    private int racketPositionY = 750;
-    private int racketBounceRate = 20;
+    private int positionX = Constants.WINDOW_WIDTH_HALF;
+    private int positionY = Constants.WINDOW_HEIGHT - RACKET_HEIGHT * 2;
+    private int speed = 25;
 
     public Racket() {
         try {
@@ -34,30 +34,45 @@ public class Racket {
 
     public void drawRacket(Graphics2D g2D) {
         g2D.drawImage(
-            racketImg, racketPositionX, racketPositionY,
-            racketPositionX + RACKET_WIDTH, racketPositionY + RACKET_HEIGHT,
-            0, 0, racketImg.getWidth(), racketImg.getHeight(),
-            null
+                racketImg, positionX, positionY,
+                positionX + RACKET_WIDTH, positionY + RACKET_HEIGHT,
+                0, 0, racketImg.getWidth(), racketImg.getHeight(),
+                null
         );
     }
 
-
-    public int getRacketPositionX() {
-        return racketPositionX;
+    public void moveToTop() {
+        positionY -= speed;
     }
 
-    public void setRacketPositionX(int racketPositionX) {
-        this.racketPositionX = racketPositionX;
+    public void moveToDown() {
+        positionY += speed;
     }
 
-    public int getRacketPositionY() {
-        return racketPositionY;
+    public void moveToLeft() {
+        positionX -= speed;
     }
 
-    public void setRacketPositionY(int racketPositiony) {
-        this.racketPositionY = racketPositiony;
+    public void moveToRight() {
+        positionX += speed;
     }
-    
+
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(int racketPositiony) {
+        this.positionY = racketPositiony;
+    }
+
     public int getRACKET_WIDTH() {
         return RACKET_WIDTH;
     }
@@ -65,4 +80,13 @@ public class Racket {
     public int getRACKET_HEIGHT() {
         return RACKET_HEIGHT;
     }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
 }
